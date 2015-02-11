@@ -33,8 +33,11 @@ int main(int argc, char** argv) {
 	po::options_description description("Usage:");
 	description.add_options()
 		("help", "This help message")
+		("elements",  po::value<int>(), "Set the amount of elements to sort. Default is 1000")
 		("position",  po::value<int>(), "Set the position. Default is 100")
 		("print_list",  "Print the numbers sorted")
+		("print_unsorted_list",  "Print the unsorted list")
+		("print_every_iteraction", "Print every iteraction on sort")
 		;
 
 	po::variables_map vm;
@@ -46,20 +49,30 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 
-	if( vm.count( "position" ) ) {
+	if( vm.count( "position" ) )
 		baseSort.setPosition( vm["position"].as<int>()  );
-	}
 
 	// Get random values
-	baseSort.randomSample( myList, 1000 );
+	baseSort.randomSample( myList, vm.count( "elements" ) ? vm["elements"].as<int>() : 1000 );
 
+	if( vm.count( "print_every_iteraction" ) )
+		baseSort.printIteractions( true );
+
+	if( vm.count( "print_unsorted_list" ) ) {
+		for( int i = 0; i < myList.size(); i++ )
+			std::cout << myList[i] << " ";
+		std::cout << std::endl << std::endl;
+	}
+
+	// Effectively sort the list
 	baseSort.sort( myList );
 
-	std::cout << "Number of iteractions to sort first " << baseSort.getPosition() 
+	std::cout << std::endl 
+		<< "Number of iteractions to sort first " << baseSort.getPosition()
 		<< " numbers: " << baseSort.getIteractions() << std::endl << std::endl;
 
 	if( vm.count( "print_list" ) ) {
-		for( int i = 0; i < baseSort.getPosition(); i++ )
+		for( int i = 0; i < myList.size(); i++ )
 			std::cout << myList[i] << " ";
 		std::cout << std::endl;
 	}

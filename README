@@ -11,9 +11,12 @@ to do that on every sort algorithm.
 N can be any position where N <= MAX_INTEGERS.
 Initially there are only a simple bubblesort of the book algorithm added
 
-There's three command line options available
+Command line options available
 
---help - Shows help message
---print_list - Print the sorted list of integers
---position - alters the position of iteractions to test. default is 100
-
+Usage::
+  --help                    This help message
+  --elements arg            Set the amount of elements to sort. Default is 1000
+  --position arg            Set the position. Default is 100
+  --print_list              Print the numbers sorted
+  --print_unsorted_list     Print the unsorted list
+  --print_every_iteraction  Print every iteraction on sort

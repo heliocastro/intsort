@@ -22,27 +22,36 @@
 #include <algorithm>
 #include <vector>
 #include <ctime>
+#include <iostream>
 
 // This is the very simple bubblesort implementation
 void
 BaseSort::sort( std::vector<int> &ilist ) {
-      bool swapped = true;
-      int j = 0;
-      int tmp;
-      while (swapped) {
-            swapped = false;
-            j++;
-            for (int i = 0; i < ilist.size() - j; i++) {
-                  if (ilist[i] > ilist[i + 1]) {
-                        tmp = ilist[i];
-                        ilist[i] = ilist[i + 1];
-                        ilist[i + 1] = tmp;
-                        swapped = true;
-						if( i < position )
-							iteractions++;
-                  }
-            }
-      }
+	bool swapped = true;
+	int j = 0;
+	int tmp;
+
+	if( showIter ) 
+		std::cout << "- Printing all iteractions. WARNING: This slows the process and is for pure DEBUG purposes." << std::endl;
+	while (swapped) {
+		swapped = false;
+		j++;
+		for (int i = 0; i < ilist.size() - j; i++) {
+			if (ilist[i] > ilist[i + 1]) {
+				tmp = ilist[i];
+				ilist[i] = ilist[i + 1];
+				ilist[i + 1] = tmp;
+				swapped = true;
+				if( i < position )
+					iteractions++;
+			}
+		}
+		if( showIter ) {
+			for( int i = 0; i < ilist.size(); i++ )
+				std::cout << ilist[i] << " ";
+			std::cout << std::endl;
+		}
+	}
 }
 
 
@@ -60,9 +69,11 @@ BaseSort::randomSample( std::vector<int> &ilist, double amount ) {
 		ilist.push_back( listDist( listSeed ) );
 }
 
+
 BaseSort::BaseSort() {
 	// clear iteractions
 	iteractions = 0;
 	position = 100;
+	showIter = false;
 }
 

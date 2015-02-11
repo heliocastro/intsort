@@ -23,6 +23,11 @@
 
 #include <vector>
 
+/**
+ * This is BaseSort class. Is a simple class for sorting integer elements
+ * The standard sort code algorithm is bubblesort. 
+ * Function sort is virtual, allowing to change the algorithm in derived classes
+ **/
 class BaseSort
 {
 public:
@@ -68,11 +73,23 @@ public:
      */
 	double getPosition() const {  return position; }
 
+	/**
+	 * Enable or disable output of all list iteractions. U
+	 * Useful only for debug process.
+	 *
+	 * @param enable Enable or disable the output
+	 */
+	void printIteractions( bool enable ) { showIter =  enable; }
+
 public:
+	/**
+	 * BaseSort constructor
+	 **/
 	BaseSort();
 private:
 	int iteractions;
 	double position;
+	bool showIter;
 };
 
 #endif //__BASESORT_H__
