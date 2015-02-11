@@ -4,8 +4,16 @@ intsort: Sort integer sample test
 Copyright (c) 2015 (helio@kde.org)
 Distributed under the GNU General Public License
 
-This is a simple sample test for a sort class.
+This is a simple sample test for sort classes.
 It takes a random number of integers MAX_INTEGERS and sort  it using different algorithms.
 Results are shown as number of iteractions took to the N element is sorted and time
 to do that on every sort algorithm.
 N can be any position where N <= MAX_INTEGERS.
+Initially there are only a simple bubblesort of the book algorithm added
+
+There's three command line options available
+
+--help - Shows help message
+--print_list - Print the sorted list of integers
+--position - alters the position of iteractions to test. default is 100
+
