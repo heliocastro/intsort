@@ -1,0 +1,11 @@
+intsort: Sort integer sample test
+
+----------------------------
+Copyright (c) 2015 (helio@kde.org)
+Distributed under the GNU General Public License
+
+This is a simple sample test for a sort class.
+It takes a random number of integers MAX_INTEGERS and sort  it using different algorithms.
+Results are shown as number of iteractions took to the N element is sorted and time
+to do that on every sort algorithm.
+N can be any position where N <= MAX_INTEGERS.
