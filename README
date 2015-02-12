@@ -14,9 +14,7 @@ Initially there are only a simple bubblesort of the book algorithm added
 Command line options available
 
 Usage::
-  --help                    This help message
-  --elements arg            Set the amount of elements to sort. Default is 1000
-  --position arg            Set the position. Default is 100
-  --print_list              Print the numbers sorted
-  --print_unsorted_list     Print the unsorted list
-  --print_every_iteraction  Print every iteraction on sort
+  --help                This help message
+  --elements arg        Set the amount of elements to sort. Default is 1000
+  --position arg        Set the position. Default is 100
+  --enable_debug        Enable trace debug of all iteractions
