@@ -18,6 +18,8 @@
 */
 
 #include <basesort.h>
+#include <quicksort.h>
+#include <sortutil.h>
 
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
@@ -25,19 +27,16 @@ namespace po = boost::program_options;
 #include <iostream>
 
 int main(int argc, char** argv) {
-	// most basic sort engine to test
-	BaseSort baseSort;
-	// Our integer list
+	QuickSort sort;
 	std::vector<int> myList;
+	std::vector<int> tmpList;
 
 	po::options_description description("Usage:");
 	description.add_options()
 		("help", "This help message")
 		("elements",  po::value<int>(), "Set the amount of elements to sort. Default is 1000")
 		("position",  po::value<int>(), "Set the position. Default is 100")
-		("print_list",  "Print the numbers sorted")
-		("print_unsorted_list",  "Print the unsorted list")
-		("print_every_iteraction", "Print every iteraction on sort")
+		("enable_debug",  "Enable trace debug of all iteractions")
 		;
 
 	po::variables_map vm;
@@ -50,32 +49,33 @@ int main(int argc, char** argv) {
 	}
 
 	if( vm.count( "position" ) )
-		baseSort.setPosition( vm["position"].as<int>()  );
+		sort.setPosition( vm["position"].as<int>()  );
 
-	// Get random values
-	baseSort.randomSample( myList, vm.count( "elements" ) ? vm["elements"].as<int>() : 1000 );
+	// Get random values 
+	SortUtil::randomSample( myList, vm.count( "elements" ) ? vm["elements"].as<int>() : 1000 );
 
-	if( vm.count( "print_every_iteraction" ) )
-		baseSort.printIteractions( true );
+	if( vm.count( "enable_debug" ) )
+		sort.setDebugEnabled( true );
 
-	if( vm.count( "print_unsorted_list" ) ) {
-		for( int i = 0; i < myList.size(); i++ )
-			std::cout << myList[i] << " ";
-		std::cout << std::endl << std::endl;
-	}
+	// Preserve original list
+	tmpList = myList;
 
 	// Effectively sort the list
-	baseSort.sort( myList );
+	sort.sort( tmpList );
 
 	std::cout << std::endl 
-		<< "Number of iteractions to sort first " << baseSort.getPosition()
-		<< " numbers: " << baseSort.getIteractions() << std::endl << std::endl;
+	<< "Number of iteractions to sort first " << sort.getPosition()
+	<< " numbers: " << sort.getIteractions() << std::endl << std::endl;
 
-	if( vm.count( "print_list" ) ) {
-		for( int i = 0; i < myList.size(); i++ )
-			std::cout << myList[i] << " ";
-		std::cout << std::endl;
-	}
+	// copy again the original list
+	tmpList = myList;
+
+	// Call the superclass base algorithm
+	sort.BaseSort::sort( myList );
+
+	std::cout << std::endl 
+		<< "Number of iteractions to sort first " << sort.getPosition()
+		<< " numbers: " << sort.getIteractions() << std::endl << std::endl;
 
 	return 0;
 }

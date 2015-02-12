@@ -22,6 +22,7 @@
 #define __BASESORT_H__
 
 #include <vector>
+#include <ctime>
 
 /**
  * This is BaseSort class. Is a simple class for sorting integer elements
@@ -46,18 +47,9 @@ public:
 	 * 
 	 * @param ilist the integer vector to be populated
 	 * @param amount The amount of integers to be generated
+	 * @param seed Set a fixed seed if needed. If not, defaults to time_t current time
      */
-	void randomSample( std::vector<int> &ilist, double amount );
-
-	/**
-	 * Set the position of the sorted list you want to get to see iteractions number
-     * Default is 100.
-     * If the number set prove to be higher than the provided amount of numbers 
-	 * in the integers list, the max number of the integers is taken.
-	 *
- 	 * @param pos position of the integers list where info is required
-	 */
-	void setPosition( double pos = 100 ) { position = pos; }
+	void randomSample( std::vector<int> &ilist, double amount, time_t seed = std::time(0) );
 
 	/**
 	 * Get the number of iteractions done until reach interactions requested
@@ -74,12 +66,40 @@ public:
 	double getPosition() const {  return position; }
 
 	/**
-	 * Enable or disable output of all list iteractions. U
+	 * Set the position of the sorted list you want to get to see iteractions number
+     * Default is 100.
+     * If the number set prove to be higher than the provided amount of numbers 
+	 * in the integers list, the max number of the integers is taken.
+	 *
+ 	 * @param pos position of the integers list where info is required
+	 */
+	void setPosition( double pos = 100 ) { position = pos; }
+
+	/**
+	 * Enable or disable output of all list iteractions. 
 	 * Useful only for debug process.
 	 *
-	 * @param enable Enable or disable the output
+	 * @param enable Enable or disable the debug output
 	 */
-	void printIteractions( bool enable ) { showIter =  enable; }
+	void setDebugEnabled( bool enable ) { traceEnabled = enable; }
+
+	/**
+	 * Get  debug state
+	 *
+	 * @returns Debug state
+	 */
+	bool debugEnabled() const { return traceEnabled; }
+
+	/**
+	 * Add one iteraction to the counter
+	 *
+	 */
+	void addIteraction() { iteractions++; }
+
+	/**
+	 * reset the number of iteractions
+	 */
+	void resetIteractions() { iteractions = 0; }
 
 public:
 	/**
@@ -89,7 +109,7 @@ public:
 private:
 	int iteractions;
 	double position;
-	bool showIter;
+	bool traceEnabled;
 };
 
 #endif //__BASESORT_H__

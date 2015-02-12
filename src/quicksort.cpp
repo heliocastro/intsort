@@ -17,48 +17,40 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include <basesort.h>
+#include <quicksort.h>
 
+#include <algorithm>
 #include <vector>
+#include <ctime>
 #include <iostream>
 
-// This is the very simple bubblesort implementation
+// Quicksort implementation
 void
-BaseSort::sort( std::vector<int> &ilist ) {
+QuickSort::sort( std::vector<int> &ilist ) {
 	bool swapped = true;
 	int j = 0;
 	int tmp;
-	double pos = getPosition() < ilist.size() ? getPosition() : ilist.size() -1;
 
-	std::cout << "- Using BubbleSort ( Default algorithm )" << std::endl;
+	std::cout << "- Using Quicksort" << std::endl;
 
 	resetIteractions();
 
-	while (swapped) {
-		swapped = false;
-		j++;
-		// We dont need sort all elements, only first 100
-		for (int i = 0; i < pos /*ilist.size()*/ - j; i++) {
-			if (ilist[i] > ilist[i + 1]) {
-				tmp = ilist[i];
-				ilist[i] = ilist[i + 1];
-				ilist[i + 1] = tmp;
-				swapped = true;
-				addIteraction();
-			}
-		}
-		if( debugEnabled() ) {
-			for( int i = 0; i < pos; i++ )
-				std::cout << ilist[i] << " ";
-			std::cout << std::endl;
-		}
-	}
+	templateSort( ilist.begin(), ilist.begin() + getPosition() );
+
 }
 
-BaseSort::BaseSort() {
-	// clear iteractions
-	iteractions = 0;
-	position = 100;
-	traceEnabled = false;
+// Standard C++ implementation
+// This is the short version from wikibooks
+// http://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Quicksort#C.2B.2B
+// Under CC 3.0 Share-Alike
+template <typename T>
+void QuickSort::templateSort(T begin, T end) {
+    if (begin != end) {
+        T middle = std::partition (begin, end, std::bind2nd(
+                    std::less<typename std::iterator_traits<T>::value_type>(), *begin));
+        templateSort (begin, middle);
+        T new_middle = begin;
+        templateSort (++new_middle, end);
+    }
+	addIteraction();
 }
-

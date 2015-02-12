@@ -6,6 +6,8 @@ include_directories(
 set( INTSORT_SRCS
 	main.cpp
 	basesort.cpp
+	quicksort.cpp
+	sortutil.cpp
 	)
 
 add_executable( intsort ${INTSORT_SRCS} )
