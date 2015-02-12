@@ -50,6 +50,16 @@ private:
      template <typename T>
      void templateSort(T begin, T end);
 
+	 /**
+	  * Flag to sinalize when the required value reach the left most node 
+	  * all iteractions over him are done.
+	  */
+	 bool leftMostNode;
+
+	 /** 
+	  * Reference value from position
+	  **/
+	 int referenceValue;
 public:
 	/**
 	 * QuickSort constructor

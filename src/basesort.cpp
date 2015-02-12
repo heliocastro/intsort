@@ -34,17 +34,28 @@ BaseSort::sort( std::vector<int> &ilist ) {
 
 	resetIteractions();
 
+	// Keep the pos elementh to track
+	int trackElement  = ilist[100];
+	int currentPos = pos;
+
 	while (swapped) {
+		addTotalIteraction();
 		swapped = false;
 		j++;
 		// We dont need sort all elements, only first 100
-		for (int i = 0; i < pos /*ilist.size()*/ - j; i++) {
+		for (int i = 0; i < ilist.size() - j; i++) {
 			if (ilist[i] > ilist[i + 1]) {
 				tmp = ilist[i];
 				ilist[i] = ilist[i + 1];
 				ilist[i + 1] = tmp;
 				swapped = true;
-				addIteraction();
+				if( i == currentPos && ilist[i] != trackElement ) {
+						currentPos++;
+						addIteraction();
+				} else if( i == currentPos-1 && ilist[i] == trackElement ) {
+					currentPos--;
+					addIteraction();
+				}
 			}
 		}
 		if( debugEnabled() ) {

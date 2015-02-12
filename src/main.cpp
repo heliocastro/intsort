@@ -54,6 +54,8 @@ int main(int argc, char** argv) {
 	// Get random values 
 	SortUtil::randomSample( myList, vm.count( "elements" ) ? vm["elements"].as<int>() : 1000 );
 
+	std::cout << "Current element on position " << sort.getPosition() << " is " << myList[100] << std::endl << std::endl;
+
 	if( vm.count( "enable_debug" ) )
 		sort.setDebugEnabled( true );
 
@@ -63,9 +65,7 @@ int main(int argc, char** argv) {
 	// Effectively sort the list
 	sort.sort( tmpList );
 
-	std::cout << std::endl 
-	<< "Number of iteractions to sort first " << sort.getPosition()
-	<< " numbers: " << sort.getIteractions() << std::endl << std::endl;
+	std::cout  << "Number of iteractions to sort element " << sort.getPosition() << " : " << sort.getIteractions() << std::endl << std::endl;
 
 	// copy again the original list
 	tmpList = myList;
@@ -73,9 +73,7 @@ int main(int argc, char** argv) {
 	// Call the superclass base algorithm
 	sort.BaseSort::sort( myList );
 
-	std::cout << std::endl 
-		<< "Number of iteractions to sort first " << sort.getPosition()
-		<< " numbers: " << sort.getIteractions() << std::endl << std::endl;
+	std::cout  << "Number of iteractions to sort element " << sort.getPosition() << " : " << sort.getIteractions() << std::endl << std::endl;
 
 	return 0;
 }

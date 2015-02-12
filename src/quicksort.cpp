@@ -23,19 +23,18 @@
 #include <vector>
 #include <ctime>
 #include <iostream>
+#include <iterator>
 
 // Quicksort implementation
 void
 QuickSort::sort( std::vector<int> &ilist ) {
-	bool swapped = true;
-	int j = 0;
-	int tmp;
-
 	std::cout << "- Using Quicksort" << std::endl;
 
 	resetIteractions();
+	leftMostNode = false;
+	referenceValue = ilist[ getPosition() ];
 
-	templateSort( ilist.begin(), ilist.begin() + getPosition() );
+	templateSort( ilist.begin(), ilist.end() );
 
 }
 
@@ -45,12 +44,29 @@ QuickSort::sort( std::vector<int> &ilist ) {
 // Under CC 3.0 Share-Alike
 template <typename T>
 void QuickSort::templateSort(T begin, T end) {
+
+	addTotalIteraction();
+
+	if( debugEnabled() ) {
+		std::copy(begin, end, std::ostream_iterator<int>(std::cout, " "));
+		std::cout << std::endl;
+	}
+
+	std::vector<int>::iterator it;
+
     if (begin != end) {
         T middle = std::partition (begin, end, std::bind2nd(
                     std::less<typename std::iterator_traits<T>::value_type>(), *begin));
+		it = find( begin, end, referenceValue );
+		if( leftMostNode == false && it != end )
+			addIteraction();
+
         templateSort (begin, middle);
         T new_middle = begin;
         templateSort (++new_middle, end);
     }
-	addIteraction();
+	else if( *begin == referenceValue ) {
+		// Raise the flag we reach the position
+		leftMostNode == true;
+	}
 }

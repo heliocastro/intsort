@@ -52,13 +52,6 @@ public:
 	void randomSample( std::vector<int> &ilist, double amount, time_t seed = std::time(0) );
 
 	/**
-	 * Get the number of iteractions done until reach interactions requested
-     *
-	 * @returns Number of iteractions happened until reach the requested position
-     */
-	double getIteractions() const {  return iteractions; }
-
-	/**
 	 * Get the position where we want to stop the iteractions
      *
 	 * @returns position number
@@ -97,9 +90,29 @@ public:
 	void addIteraction() { iteractions++; }
 
 	/**
+	 * Get the number of iteractions done until reach interactions requested
+     *
+	 * @returns Number of iteractions happened until reach the requested position
+     */
+	double getIteractions() const {  return iteractions; }
+
+	/**
+	 * Add one iteraction to the total counter
+	 *
+	 */
+	void addTotalIteraction() { totalIteractions++; }
+
+	/**
+	 * Get the number of iteractions done until reach interactions requested
+     *
+	 * @returns Number of iteractions happened until reach the requested position
+     */
+	double getiTotalIteractions() const {  return totalIteractions; }
+
+	/**
 	 * reset the number of iteractions
 	 */
-	void resetIteractions() { iteractions = 0; }
+	void resetIteractions() { iteractions = 0; totalIteractions = 0; }
 
 public:
 	/**
@@ -107,7 +120,8 @@ public:
 	 **/
 	BaseSort();
 private:
-	int iteractions;
+	double iteractions;
+	double totalIteractions;
 	double position;
 	bool traceEnabled;
 };
